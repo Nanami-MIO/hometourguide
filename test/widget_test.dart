@@ -1,30 +1,58 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:hometrour/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('home keeps city hub and opens Chongqing as second-level page', (
+    tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('精选城市'), findsOneWidget);
+    expect(find.text('枣庄'), findsOneWidget);
+    expect(find.text('上海'), findsOneWidget);
+    expect(find.text('成都'), findsOneWidget);
+    expect(find.text('西安'), findsOneWidget);
+    expect(find.text('重庆'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.ensureVisible(find.text('重庆'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('重庆'));
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('首页'), findsOneWidget);
+    expect(find.text('景点'), findsOneWidget);
+    expect(find.text('美食'), findsOneWidget);
+    expect(find.text('旅游'), findsOneWidget);
+    expect(find.text('山城重庆'), findsOneWidget);
+  });
+
+  testWidgets('other city cards still show detail sheet', (tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.ensureVisible(find.text('枣庄'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('枣庄'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('台儿庄古城'), findsOneWidget);
+  });
+
+  testWidgets('Chongqing route detail renders mapped route page', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tester.ensureVisible(find.text('重庆'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('重庆'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.map_outlined));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('详情').first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('地图路线示意图'), findsOneWidget);
+    expect(find.text('建议时长 约8-9小时'), findsOneWidget);
   });
 }
