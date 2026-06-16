@@ -72,15 +72,6 @@ List<CityData> _buildCities(String l) => [
     detail: I18n.cityDetailShanghai(l),
   ),
   CityData(
-    id: 3,
-    name: I18n.cityNameChengdu(l),
-    score: '4.7',
-    desc: I18n.cityDescChengdu(l),
-    tags: [l == 'ko' ? '판다' : '大熊猫', l == 'ko' ? '콴자이샹쯔' : '宽窄巷子'],
-    image: 'assets/img3.jpg',
-    detail: I18n.cityDetailChengdu(l),
-  ),
-  CityData(
     id: 4,
     name: I18n.cityNameXian(l),
     score: '4.9',
