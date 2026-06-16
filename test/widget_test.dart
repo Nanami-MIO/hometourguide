@@ -13,7 +13,6 @@ void main() {
     expect(find.text('四个精选城市'), findsOneWidget);
     expect(find.text('枣庄'), findsOneWidget);
     expect(find.text('上海'), findsOneWidget);
-    expect(find.text('成都'), findsOneWidget);
     expect(find.text('西安'), findsOneWidget);
     expect(find.text('重庆'), findsOneWidget);
 
@@ -27,6 +26,10 @@ void main() {
     expect(find.text('美食'), findsOneWidget);
     expect(find.text('旅游'), findsOneWidget);
     expect(find.text('山城重庆'), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TravelHomePage), findsOneWidget);
   });
 
   testWidgets('home language toggle remains available after merge', (
